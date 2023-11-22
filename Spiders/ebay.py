@@ -46,11 +46,11 @@ class EbaySpider:
                 prices.append("")
         return names, prices
 
-    def pagination(self, page_to_scrape):
+    def pagination(self, pages_to_scrape):
         all_names = []
         all_prices = []
-        if page_to_scrape < 166:  # max 10.000 (60*166)
-            for i in range(1, page_to_scrape+1):
+        if pages_to_scrape < 166:  # max 10.000 (60*166)
+            for i in range(1, pages_to_scrape+1):
                 print(f"Scraping page {i}...")
                 names, prices = self.scrape_data()
                 all_names.extend(names) 
@@ -80,10 +80,10 @@ class EbaySpider:
     def close_driver(self):
         self.driver.close()
 
-    def exec(self, search_keywords, page_to_scrape, output_csv=False, output_json=False):
+    def exec(self, search_keywords, pages_to_scrape, output_csv=False, output_json=False):
         self.navigate_to_website()
         self.search_keywords(search_keywords)
-        data = self.pagination(page_to_scrape)
+        data = self.pagination(pages_to_scrape)
         self.close_driver()
 
         df = pd.DataFrame(data)
